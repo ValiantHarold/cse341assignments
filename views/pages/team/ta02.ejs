@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+<div class="jumbotron text-center">
+  <div class="container">
+    <form action="/ta02/addUser" method="POST">
+      <div>
+          <label for="addUser">Add User</label>
+          <input type="text" name="addUser" id="addUser">
+      </div>
+      <button class="btn-primary" type="submit">Click to Add</button>
+  </form>
+  <div style="color: black;">
+    <% names.forEach(names => { %>
+    <p><%= names %></p>
+    <% }); %>
+  </div>
+  <form action="/ta02/removeUser" method="POST">
+    <div>
+        <label for="removeUser">Remove User</label>
+        <input type="text" name="removeUser" id="removeUser">
+    </div>
+    <button class="btn-primary" type="submit">Click to Remove</button>
+</form>
+  </div>
+</div>
+<div class="container">
+  
+</div>
+
+
+</body>
+</html>

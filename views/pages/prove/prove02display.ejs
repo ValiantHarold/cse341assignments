@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../../includes/header.ejs %>
+</head>
+
+<body>
+    <main>
+        <% include ../../includes/nav.ejs %>
+        <div class="jumbotron text-center">
+            <div class="container">
+              <h1><%= title %></h1>
+              <p><a style="color: black;" href="/prove/prove02">Click to go back to  add more books</a></p>
+            </div>
+        </div>
+        <div class="container">
+            <% if (books.length > 0) { %>
+                <div>
+                    <% books.forEach(book => { %>
+                        <article>
+                            <header>
+                                <h1><%= book.title %></h1>
+                            </header>
+                            <div>
+                                <p><%= book.description %></p>
+                            </div>
+                        </article>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <h1>No Products Found!</h1>
+            <% }; %>
+        </div> 
+    </main>
+</body>
+</html>
