@@ -29,4 +29,46 @@ app
 .use(bodyParser.urlencoded({ extended: false }))
 .use('/', routes)
 
+const corsOptions = {
+    origin: "https://cse341assignments.herokuapp.com/",
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+const options = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    family: 4
+};
+
+
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://Samuel:Lt1YGw42ik6YTuhc@cluster0.k4ttt.mongodb.net/test';
+                        
+
+mongoose
+    .connect(MONGODB_URL, options)
+    .then(result => {
+        User.findOne().then(user => {
+            if(!user) {
+                const user = new User({
+                    name: 'Samuel',
+                    email: 'fakeemail@real.com',
+                    cart: {
+                        items: []
+                    }
+                });
+                user.save();
+            }
+        });
+        console.log('Connected to port 5000');
+        app.listen(5000);
+    })
+    .catch(err => console.log(err));
+
+
+// pw:Lt1YGw42ik6YTuhc
+
 .listen(PORT, () => console.log(`Listening on ${ PORT }`));
