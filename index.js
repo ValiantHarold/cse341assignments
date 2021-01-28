@@ -44,10 +44,8 @@ const options = {
     family: 4
 };
 
-
 const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://Samuel:Lt1YGw42ik6YTuhc@cluster0.k4ttt.mongodb.net/test';
                         
-
 mongoose
     .connect(MONGODB_URL, options)
     .then(result => {
@@ -64,11 +62,8 @@ mongoose
             }
         });
         console.log('Connected to port 5000');
-        app.listen(5000);
+        app.listen(PORT);
     })
     .catch(err => console.log(err));
 
-
 // pw:Lt1YGw42ik6YTuhc
-
-.listen(PORT, () => console.log(`Listening on ${ PORT }`));
