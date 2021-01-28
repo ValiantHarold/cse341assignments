@@ -11,9 +11,10 @@
  * IMPORTANT: Make sure to run "npm install" in your root before "npm start"
  *******************************************************************************/
 // Our initial setup (package requires, port number setup)
-const express = require('express'); 
+const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 const PORT = process.env.PORT || 5000 // So we can run on heroku || (OR) localhost:5000
 
 const app = express();
@@ -27,5 +28,5 @@ app
 .set('view engine', 'ejs')
 .use(bodyParser.urlencoded({ extended: false }))
 .use('/', routes)
-   
+
 .listen(PORT, () => console.log(`Listening on ${ PORT }`));

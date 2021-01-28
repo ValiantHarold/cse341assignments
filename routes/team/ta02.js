@@ -17,7 +17,7 @@ router.get('/',(req, res, next) => {
 
 router.post('/addUser',(req, res, next) => {
     user.push(req.body.addUser);
-    res.redirect('/ta02');
+    res.redirect('/team/ta02');
 });
 
 router.post('/removeUser',(req, res, next) => {
@@ -26,7 +26,7 @@ router.post('/removeUser',(req, res, next) => {
             user.splice (i, 1);
         };
     };
-    res.redirect('/ta02');
+    res.redirect('/team/ta02');
 });
 
 module.exports = router;

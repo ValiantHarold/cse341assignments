@@ -8,7 +8,7 @@
   <% include ../../includes/nav.ejs %>
 <div class="jumbotron text-center">
   <div class="container">
-    <form action="/ta02/addUser" method="POST">
+    <form action="/team/ta02/addUser" method="POST">
       <div>
           <label for="addUser">Add User</label>
           <input type="text" name="addUser" id="addUser">
@@ -20,7 +20,7 @@
     <p><%= names %></p>
     <% }); %>
   </div>
-  <form action="/ta02/removeUser" method="POST">
+  <form action="/team/ta02/removeUser" method="POST">
     <div>
         <label for="removeUser">Remove User</label>
         <input type="text" name="removeUser" id="removeUser">

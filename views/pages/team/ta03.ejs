@@ -2,6 +2,7 @@
 <html>
 <head>
   <% include ../../includes/header.ejs %>
+  <link rel="stylesheet" href="/stylesheets/ta03.css">
 </head>
 
 <body>
@@ -9,10 +10,34 @@
 <div class="jumbotron text-center">
   <div class="container">
     <h1><%= title %></h1>
-    <p>This is the placeholder for Team Activity 03</p>
+    <form action="/team/ta03/item-tags" method="POST">
+      <select name="tags" id="tags" required>
+        <% for (const tag of tags) { %>
+          <option value="<%= tag %>"><%= tag %></option>
+        <% }; %>
+      </select>
+      <button type="submit">Click Me!</button>
+    </form>
   </div>
 </div>
-<div class="container">
+<div class="container grid">
+  <% for(var i=0; i<items.length; i++) {%>
+
+    <article class="card product-item">
+      <header class="card__header">
+          <h1 class="product__title"><%= items[i].name %></h1>
+      </header>
+      <div class="card__image">
+          <img src="<%= items[i].imageUrl %>"
+              alt="<%= items[i].name %>">
+      </div>
+      <div class="card__content">
+          <h2 class="product__price">$<%= items[i].price %></h2>
+          <p class="product__description"><%= items[i].description %></p>
+      </div>
+  </article>
+ <% } %>
+</div>
   
 </div>
 
