@@ -49,18 +49,18 @@ const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://Samuel:Lt1YGw42ik6
 mongoose
     .connect(MONGODB_URL, options)
     .then(result => {
-        User.findOne().then(user => {
-            if(!user) {
-                const user = new User({
-                    name: 'Samuel',
-                    email: 'fakeemail@real.com',
-                    cart: {
-                        items: []
-                    }
-                });
-                user.save();
-            }
-        });
+        // User.findOne().then(user => {
+        //     if(!user) {
+        //         const user = new User({
+        //             name: 'Samuel',
+        //             email: 'fakeemail@real.com',
+        //             cart: {
+        //                 items: []
+        //             }
+        //         });
+        //         user.save();
+        //     }
+        // });
         console.log('Connected to port 5000');
         app.listen(PORT);
     })
