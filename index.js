@@ -16,9 +16,17 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const PORT = process.env.PORT || 5000 // So we can run on heroku || (OR) localhost:5000
 
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://Samuel:Lt1YGw42ik6YTuhc@cluster0.k4ttt.mongodb.net/test';
 const app = express();
+const store = new MongoDBStore({
+    uri: MONGODB_URL,
+    collection: "sessions"
+  });
+  
 
 // Route setup. You can implement more in the future!
 const routes = require('./routes');
@@ -28,6 +36,14 @@ app
 .set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
 .use(bodyParser.urlencoded({ extended: false }))
+.use(
+    session({
+        secret: 'my secret', 
+        resave: false,
+        saveUninitialized: false,
+        store: store
+    })
+)
 .use('/', routes)
 
 const corsOptions = {
@@ -45,7 +61,6 @@ const options = {
     family: 4
 };
 
-const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://Samuel:Lt1YGw42ik6YTuhc@cluster0.k4ttt.mongodb.net/test';
                         
 mongoose
     .connect(MONGODB_URL, options)
