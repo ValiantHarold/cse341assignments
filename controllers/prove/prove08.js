@@ -5,7 +5,8 @@ const ITEMS_PER_PAGE = 10
 
 const renderIndex = (req, res, json) => {
     let searchedValue = req.body.searchValue || req.query.searchValue || '';
-    let page = req.query.page || 1;
+    let page = +req.query.page || 1;
+    let totalItems = 0;
 
     const indexStart = (page - 1) * ITEMS_PER_PAGE;
     const indexEnd = page * ITEMS_PER_PAGE;
@@ -14,15 +15,24 @@ const renderIndex = (req, res, json) => {
         x.name.toLowerCase().includes(searchedValue.toLowerCase())
     )
 
+    filteredData.forEach(element => {
+        totalItems++
+    });
+
     let stuff = {
         data: filteredData.slice(indexStart, indexEnd), // For JSON/Array and not Mongoose, .slice() works best.
-        path: 'proveAssignments/03',
-        title: 'Week 3 Prove Assignment',
+        path: 'proveAssignments/08',
+        title: 'Week 8 Prove Assignment',
         searchedValue: searchedValue,
-        page: page,
-        numPages: Math.ceil(filteredData.length / ITEMS_PER_PAGE)
+        totalItems,
+        currentPage: page,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1
     }
-
+    
     res.render('pages/prove/prove08', stuff)
 }
 
