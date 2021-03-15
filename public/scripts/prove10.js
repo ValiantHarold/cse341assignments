@@ -1,19 +1,9 @@
-function convertToJson(res) {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error("Bad Response");
-    }
-}
-
-
 // A simple async GET request function
 const getData = async (url = '') => {
     const response = await fetch(url, {
         method: 'GET'
     })
-    console.log(response)
-    return convertToJson(response)
+    return response.json()
 }
 
 const postData = async (url = '', data = {}) => {
@@ -24,8 +14,7 @@ const postData = async (url = '', data = {}) => {
         },
         body: JSON.stringify(data)
     })
-    console.log(response.headers)
-    return convertToJson(response)
+    return response.json()
 }
 
 const populateList = () => {
@@ -43,17 +32,14 @@ const populateList = () => {
 
 const submitName = () => {
     const newName = document.getElementById('newName').value
-    const data = postData('/prove/prove10/insert', {
-        newName: newName
-    })
-    
-    data.then(response => {
-        if (response.status == 200) {
-            populateList() // Repopulate the list
-        } else {
-            console.error(status) // Console log our status code
-        }
-    })
+    const newColor = document.getElementById('newColor').value
+    postData('/prove/prove10/insert', {
+        newName: newName,
+        newColor: newColor
+
+    }).then(
+        populateList()
+    )
 }
 
 // Initialize the list

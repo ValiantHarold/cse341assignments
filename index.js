@@ -20,12 +20,12 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const PORT = process.env.PORT || 5000 // So we can run on heroku || (OR) localhost:5000
 
-const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://Samuel:Lt1YGw42ik6YTuhc@cluster0.k4ttt.mongodb.net/test';
+// const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://Samuel:Lt1YGw42ik6YTuhc@cluster0.k4ttt.mongodb.net/test';
 const app = express();
-const store = new MongoDBStore({
-    uri: MONGODB_URL,
-    collection: "sessions"
-  });
+// const store = new MongoDBStore({
+//     uri: MONGODB_URL,
+//     collection: "sessions"
+//   });
   
 
 // Route setup. You can implement more in the future!
@@ -36,12 +36,13 @@ app
 .set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
 .use(bodyParser.urlencoded({ extended: false }))
+.use(bodyParser.json())
 .use(
     session({
         secret: 'my secret', 
         resave: false,
         saveUninitialized: false,
-        store: store
+        // store: store
     })
 )
 .use('/', routes)
@@ -62,24 +63,25 @@ const options = {
 };
 
                         
-mongoose
-    .connect(MONGODB_URL, options)
-    .then(result => {
-        // User.findOne().then(user => {
-        //     if(!user) {
-        //         const user = new User({
-        //             name: 'Samuel',
-        //             email: 'fakeemail@real.com',
-        //             cart: {
-        //                 items: []
-        //             }
-        //         });
-        //         user.save();
-        //     }
-        // });
-        console.log('Connected to port 5000');
-        app.listen(PORT);
-    })
-    .catch(err => console.log(err));
+// mongoose
+//     .connect(MONGODB_URL, options)
+//     .then(result => {
+//         User.findOne().then(user => {
+//             if(!user) {
+//                 const user = new User({
+//                     name: 'Samuel',
+//                     email: 'fakeemail@real.com',
+//                     cart: {
+//                         items: []
+//                     }
+//                 });
+//                 user.save();
+//             }
+//         });
+//     })
+//     .catch(err => console.log(err));
+
+    console.log('Connected to port 5000');
+    app.listen(PORT);
 
 // pw:Lt1YGw42ik6YTuhc
