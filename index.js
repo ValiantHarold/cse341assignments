@@ -80,8 +80,18 @@ const options = {
 //         });
 //     })
 //     .catch(err => console.log(err));
-
-    console.log('Connected to port 5000');
-    app.listen(PORT);
+const server = app.listen(PORT)
+console.log('Connected to port 5000');
+const io = require('socket.io')(server)
+io.on('connection', socket => {
+    console.log('Client connected')
+    socket.on('new-name', update => {
+        if (update) {
+            socket.broadcast.emit('update-list')
+        } else {
+            console.log('Looks like something went wrong')
+        }
+    })
+})
 
 // pw:Lt1YGw42ik6YTuhc
