@@ -16,7 +16,8 @@ const populateList = () => {
             // Repopulate the list
             for (const avenger of data.avengers) {
                 const li = document.createElement('li')
-                li.appendChild(document.createTextNode(avenger.name))
+                li.appendChild(document.createTextNode(`Name: ${avenger.name} `))
+                li.appendChild(document.createTextNode(`Color: ${avenger.favoriteColor}`))
                 nameList.appendChild(li)
             }
         })
@@ -27,6 +28,7 @@ const populateList = () => {
 
 const submitName = () => {
     const newName = document.getElementById('newName').value // Grab the value of our new name
+    const favoriteColor = document.getElementById('newColor').value // Grab the value of our new name
 
     fetch('/prove/prove11/insert', {
         method: 'POST', // Send a POST request
@@ -34,11 +36,12 @@ const submitName = () => {
             // Set the Content-Type, since our server expects JSON
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ newName })
+        body: JSON.stringify({ newName, favoriteColor })
     })
         .then(res => {
             // Clear the input
             document.getElementById('newName').value = ''
+            document.getElementById('newColor').value = ''
 
             // Repopulate the list with our new name added
             populateList()
@@ -49,47 +52,10 @@ const submitName = () => {
         .catch(err => {
             // Clear the input
             document.getElementById('newName').value = ''
+            document.getElementById('newColor').value = ''
             console.error(err)
         })
 }
 
 // Initialize the list
 populateList()
-
-
-
-
-// const populateList = () => {
-//     const nameList = document.getElementById('nameList')
-//     nameList.innerHTML = ''
-
-//     const data = getData('/prove/prove11/fetchAll')
-
-//     data.then(json => {
-//         json.avengers.forEach(item => {
-//             nameList.innerHTML += `<li>Name:${item.name} Color:${item.favoriteColor}</li>`
-//         })
-//     })
-// }
-
-// const submitName = () => {
-//     const newName = document.getElementById('newName').value
-//     const newColor = document.getElementById('newColor').value
-//     postData('/prove/prove11/insert', {
-//         newName: newName,
-//         newColor: newColor
-//     }).then(response => {
-//         console.log(response)
-//         if (response.status == 200) {
-//             populateList()
-//             document.getElementById('newName').value = ''
-//             socket.emit('new-name', true)
-//         } else {
-//             console.error(status)
-//         }
-//     )
-// }
-
-
-// // Initialize the list
-// populateList()

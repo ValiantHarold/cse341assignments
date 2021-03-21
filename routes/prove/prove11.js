@@ -37,12 +37,12 @@ router.get('/fetchAll', (req, res, next) => {
 router.post('/insert', (req, res, next) => {
     console.log(req.body)
     // Typically you should do some sort of filtering and error checking. This is minimal, and makes sure we're not accepting empty values
-    if (req.body.newName !== undefined || req.body.newColor !== undefined) {
+    if (req.body.newName !== undefined || req.body.favoriteColor !== undefined) {
         const newName = req.body.newName
-        const newColor = req.body.newColor
+        const favoriteColor = req.body.favoriteColor
         if (dummyData.avengers.find(element => element.name === req.body.newName) === undefined
         ) { // Make our submissions somewhat unique.
-            dummyData.avengers.push({ name: newName, favoriteColor: newColor})
+            dummyData.avengers.push({ name: newName, favoriteColor: favoriteColor})
             res.sendStatus(200)
         }
     } else {
