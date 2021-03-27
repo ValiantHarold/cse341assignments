@@ -26,26 +26,25 @@ const app = express();
 //     uri: MONGODB_URL,
 //     collection: "sessions"
 //   });
+
+const chat = require('./routes/prove/prove12')
   
 
-// Route setup. You can implement more in the future!
-const routes = require('./routes');
-
 app
-.use(express.static(path.join(__dirname, 'public')))
-.set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
+.set('views', path.join(__dirname, 'views'))
+.use(express.static(path.join(__dirname, 'public')))
 .use(bodyParser.urlencoded({ extended: false }))
 .use(bodyParser.json())
 .use(
     session({
-        secret: 'my secret', 
-        resave: false,
-        saveUninitialized: false,
-        // store: store
+        secret: 'random_text',
+        cookie: {
+            httpOnly: false
+        }
     })
 )
-.use('/', routes)
+.use('/', chat)
 
 const corsOptions = {
     origin: "https://cse341assignments.herokuapp.com/",
@@ -82,13 +81,35 @@ const options = {
 //     .catch(err => console.log(err));
 const server = app.listen(PORT)
 console.log('Connected to port 5000');
+
 const io = require('socket.io')(server)
 io.on('connection', socket => {
-    console.log('Client connected')
-    socket.on('new-name', () => {
-        // Someone added a name! Tell everyone else to update the list.
-        socket.broadcast.emit('update-list')
-    })
+    console.log('Client connected!')
+
+    socket
+        .on('disconnect', () => {
+            console.log('A client disconnected!')
+        })
+        .on('newUser', (username, time) => {
+            // A new user logs in.
+            const message = `${username} has logged on.`
+            // Tell other users someone has logged on.
+            socket.broadcast.emit('newMessage', {
+                message,
+                time,
+                from: 'admin'
+            })
+        })
+        .on('message', data => {
+            // Receive a new message
+            console.log('Message received')
+            console.log(data)
+            // This one is simple. Just broadcast the data we received.
+            // We can use { ...data } to copy the data object.
+            socket.broadcast.emit('newMessage', {
+                ...data
+            }) // Note, only emits to all OTHER clients, not sender.
+        })
 })
 
 // pw:Lt1YGw42ik6YTuhc

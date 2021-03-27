@@ -8,6 +8,7 @@ const prove08 = require('./prove08');
 const prove09 = require('./prove09');
 const prove10 = require('./prove10');
 const prove11 = require('./prove11');
+const prove12 = require('./prove12');
 
 router
 .use('/prove01', prove01Routes)
@@ -16,5 +17,6 @@ router
 .use('/prove09', prove09)
 .use('/prove10', prove10)
 .use('/prove11', prove11)
+.use('/prove12', prove12)
 
 module.exports = router;
